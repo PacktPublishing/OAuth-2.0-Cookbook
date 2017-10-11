@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "500120288874",
+    "firebase_url": "https://packt-login.firebaseio.com",
+    "project_id": "packt-login",
+    "storage_bucket": "packt-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500120288874:android:d23858ac3b863fe8",
+        "android_client_info": {
+          "package_name": "example.packt.com.resourceownerpassword"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500120288874-7q723p5jnea31lv4rtarjonrfv1vmobj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "500120288874-3rblj0mueku43pqadohijog7o9v4dtj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqYhXz1K6G3NSWjsXHcZk4Zk2ouKXAe30"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
