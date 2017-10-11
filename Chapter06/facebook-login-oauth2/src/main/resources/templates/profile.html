@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<p sec:authorize="isAuthenticated()">
+    Logged as <span sec:authentication="principal.username"></span>
+</p>
+<h1>That's your profile</h1>
+<p>hobbie:<span th:text="${profile.hobbies}">hobbies</span></p>
+<p>profession:<span th:text="${profile.profession}">profession</span></p>
+
+<h2>That's your facebook authentication info</h2>
+<p>name:<span th:text="${openID.name}"></span></p>
+<p>facebook id:<span th:text="${openID.id}"></span></p>
+<p>exp time(ms):<span th:text="${openID.expirationTime}"></span></p>
+<p>access token:<span th:text="${openID.token}"></span></p>
+
+<a href="#" th:href="@{/profile/form}">Add/Edit</a>
+<p><a href="#" th:href="@{/logout}">Logout</a></p>
+</body>
+</html>
+

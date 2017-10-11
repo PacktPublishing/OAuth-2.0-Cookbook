@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<p sec:authorize="isAuthenticated()">
+    You are logged in as
+    <span sec:authentication="principal.username">John Doe</span>
+    <a href="#" th:href="@{/logout}">Logout</a>
+    <h2>Add your profile info</h2>
+    <form th:action="@{/profile}" th:object="${profile}" method="post">
+        <input type="hidden" id="id" th:field="*{id}"/>
+        <b>Hobbies:</b><input id="hobbies" th:field="*{hobbies}"/>
+        <b>Profession:</b><input id="profession" th:field="*{profession}"/>
+        <button>Send</button>
+        <a th:href="@{/profile}">Cancel</a>
+    </form>
+</p>
+</body>
+</html>

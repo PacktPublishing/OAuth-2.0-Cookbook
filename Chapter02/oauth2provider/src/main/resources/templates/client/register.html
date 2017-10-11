@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>oauth2server</title>
+<link href="../webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+  rel="stylesheet" media="screen"></link>
+<link href="/bootstrap-select.min.css" rel="stylesheet"></link>
+</head>
+
+<body>
+
+  <br />
+  <div class="container">
+
+    <div class="jumbotron">
+      <h1>OAuth2 Provider</h1>
+    </div>
+
+    <h2>Create your application (client registration)</h2>
+
+    <form action="#" th:action="@{/client/save}" th:object="${registry}"
+      method="post">
+      <div class="form-group">
+        <label for="nome">Name:</label> <input class="form-control"
+          id="name" type="text" th:field="*{name}" />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">application
+          name</div>
+      </div>
+
+      <div class="form-group">
+        <label for="redirectUri">Redirect URL:</label> <input
+          class="form-control" id="redirectUri" type="text"
+          th:field="*{redirectUri}" />
+        <div th:if="${#fields.hasErrors('redirectUri')}"
+          th:errors="*{redirectUri}">Callback URL to receive the
+          authorization code</div>
+      </div>
+
+      <div class="form-group">
+        <label for="clientType">Type of application:</label>
+        <div>
+          <select id="clientType" class="selectpicker"
+            th:field="*{clientType}">
+            <option value="PUBLIC">Public</option>
+            <option value="CONFIDENTIAL">Confidential</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit">Register</button>
+        <button class="btn btn-default" type="button"
+          onclick="javascript: window.location.href='/'">Cancel</button>
+      </div>
+    </form>
+
+  </div>
+</body>
+
+<script src="/jquery.min.js"></script>
+<script src="/bootstrap-select.min.js"></script>
+<script src="../webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+
+<p sec:authorize="isAuthenticated()">
+    You are logged in as
+    <span sec:authentication="name">John Doe</span>
+    <h2>Add your profile info</h2>
+
+    <form action="#" th:action="@{/profile}" th:object="${profile}" method="post">
+        <input type="hidden" id="id" th:field="*{id}"/>
+        <div>
+            <label for="hobbies">Hobbies:</label>
+            <input id="hobbies" th:field="*{hobbies}"/>
+        </div>
+
+        <div>
+            <label for="profession">Profession:</label>
+            <input id="profession" th:field="*{profession}"/>
+        </div>
+
+        <div>
+            <label for="country">Country:</label>
+            <input id="country" th:field="*{country}"/>
+        </div>
+
+        <div>
+            <label for="city">City:</label>
+            <input id="city" th:field="*{city}"/>
+        </div>
+
+        <div>
+            <button type="submit">Send</button>
+            <button type="button" onclick="javascript: window.location.href='/profile'">Cancel</button>
+        </div>
+    </form>
+
+</p>
+<p sec:authorize="not isAuthenticated()">
+    You have to login first
+</p>
+
+
+</body>
+</html>

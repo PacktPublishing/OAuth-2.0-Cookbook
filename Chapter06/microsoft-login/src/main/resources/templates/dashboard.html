@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<body>
+<div style="border: 3px solid black; width: 30%; padding: 15px">
+    <h1>You are logged in</h1>
+    <p><b>Name:</b><span th:text="${profile.name}"></span></p>
+    <p><b>Email:</b><span th:text="${profile.email}"></span></p>
+    <p><b>Profile:</b><span th:text="${profile.sub}"></span></p>
+    <a href="/">Home</a>
+</div>
+</body>
+</html>

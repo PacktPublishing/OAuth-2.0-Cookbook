@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Profile</title>
+</head>
+<body>
+
+<h2>Your online profile manager</h2>
+<p sec:authorize="isAuthenticated()">
+    You are logged in as
+    <p sec:authentication="principal.username">John Doe</p>
+    <a href="#" th:href="@{/profile}">Go to profile</a>
+    <a href="#" th:href="@{/logout}">Logout</a>
+</p>
+
+<div sec:authorize="not isAuthenticated()">
+    <a href="#" th:href="@{/profile}">Login with Google</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+spring.thymeleaf.cache=false
+
+security.oauth2.client.google.client-secret=<google-client-secret>
+security.oauth2.client.google.client-id=<google-client-id>
+security.oauth2.client.google.scopes=openid,email,profile
+
+security.oauth2.client.microsoft.client-secret=<microsoft-client-secret>
+security.oauth2.client.microsoft.client-id=<microsoft-client-id>
+security.oauth2.client.microsoft.scopes=openid,profile,email

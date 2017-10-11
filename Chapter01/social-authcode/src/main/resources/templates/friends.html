@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Friends</title>
+</head>
+<body>
+	<h3>Hello, <span th:text="${facebookProfile.name}">User</span>!</h3>
+
+	<h4>Your friends which also allowed social-authcode:</h4>
+
+	<div th:each="friend:${friends}">
+		<b th:text="${friend.id}">[id]</b> - <b th:text="${friend.name}">[name]</b>
+		<hr/>
+	</div>
+</body>
+</html>

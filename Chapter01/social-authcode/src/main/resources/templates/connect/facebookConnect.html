@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Social Authcode</title>
+</head>
+<body>
+	<h2>Connect to Facebook to see your contacts</h2>
+
+	<form action="/connect/facebook" method="POST">
+		<input type="hidden" name="scope" value="public_profile user_friends" />
+		<input type="hidden" name="response_type" value="code" />
+
+		<div class="formInfo">
+			Click the button to share your contacts with <b>social-authcode</b>
+		</div>
+		<p><button type="submit">Connect to Facebook</button></p>
+	</form>
+
+</body>
+</html>

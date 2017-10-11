@@ -1,0 +1,10 @@
+spring.thymeleaf.cache=false
+
+security.oauth2.client.google.client-id=<your-client-id>
+security.oauth2.client.google.client-secret=<your-client-secret>
+security.oauth2.client.google.scopes=openid,email,profile
+security.oauth2.client.google.redirectUri=http://localhost:8080/oauth2/authorize/code/google
+security.oauth2.client.google.authorizationUri=https://accounts.google.com/o/oauth2/v2/auth
+security.oauth2.client.google.tokenUri=https://www.googleapis.com/oauth2/v4/token
+security.oauth2.client.google.userInfoUri=https://www.googleapis.com/oauth2/v3/userinfo
+security.oauth2.client.google.jwkSetUri=https://www.googleapis.com/oauth2/v3/certs

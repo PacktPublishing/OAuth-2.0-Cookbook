@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>client app</title>
+</head>
+<body>
+
+<p sec:authorize="isAuthenticated()">
+    You are logged in as
+    <span sec:authentication="principal.name">John Doe</span>
+</p>
+
+<h1>that's your profile</h1>
+<table>
+    <tr>
+        <td><b>hobbies</b></td>
+        <td th:text="${profile.hobbies}">hobbies</td>
+    </tr>
+    <tr>
+        <td><b>profession</b></td>
+        <td th:text="${profile.profession}">profession</td>
+    </tr>
+    <tr>
+        <td><b>country</b></td>
+        <td th:text="${profile.country}">country</td>
+    </tr>
+    <tr>
+        <td><b>city</b></td>
+        <td th:text="${profile.city}">city</td>
+    </tr>
+</table>
+<hr/>
+<button type="button" onclick="javascript: window.location.href='/profile/form'">Add/Edit</button>
+</body>
+</html>

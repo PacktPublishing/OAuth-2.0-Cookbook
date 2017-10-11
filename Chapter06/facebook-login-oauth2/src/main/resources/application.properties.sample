@@ -1,0 +1,13 @@
+spring.datasource.url=jdbc:h2:mem:packt;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+spring.jpa.properties.hibernate.hbm2ddl.auto=create
+
+spring.thymeleaf.cache=false
+
+facebook.config.clientId=<client_id>
+facebook.config.clientSecret=<client_secret>
+facebook.config.userInfoUri=https://graph.facebook.com/me
+facebook.config.appTokenUri=https://graph.facebook.com/oauth/access_token

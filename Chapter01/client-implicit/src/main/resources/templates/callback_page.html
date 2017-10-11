@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+Friends who has also granted client-implicit
+<div id="friends">
+	<ul>
+	</ul>
+</div>
+</body>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+$(document).ready(function() {
+	var fragment = window.location.hash;
+	var res = getResponse(fragment);
+
+	window.location.hash = '_#';
+
+	if (res.hasError()) {
+		$("<div>Error trying to obtain user's authorization!</div>")
+			.insertBefore('#friends');
+		return;
+	}
+
+	getFriends(res['access_token'], function(friends) {
+		$(friends).each(function(index, friend) {
+			$('#friends').find('ul').append('<li>' + friend.name + '</li>');
+		});
+	});
+
+});
+
+function getResponse(fragment) {
+	var attributes = fragment.slice(1).split('&');
+	var response = {};
+
+	$(attributes).each(function(idx, attr) {
+		var keyValue = attr.split('=');
+		response[keyValue[0]] = keyValue[1];
+	});
+
+	response.hasError = function() {
+		return !response['access_token'];
+	};
+
+	return response;
+}
+
+function getFriends(accessToken, callback) {
+	var baseUrl = 'https://graph.facebook.com/v2.9/';
+	var endpoint ='me/friends';
+	var url = baseUrl + endpoint;
+
+	$.ajax({
+        url: url,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+        },
+        success: function(result){
+			var friends = result.data;
+			callback(friends);
+        },
+        error: function(jqXHR, textStatus, errorThrown)   {
+            console.log(textStatus);
+        }
+    });
+}
+/*]]>*/
+</script>
+
+</html>

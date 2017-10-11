@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>client app</title>
+</head>
+<body>
+  <h1>Admin dashboard</h1>
+
+  <table>
+    <tr>
+        <td><b>name</b></td>
+        <td><b>email</b></td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.name}">name</td>
+        <td th:text="${user.email}">email</td>
+    </tr>
+  </table>
+
+</body>
+</html>

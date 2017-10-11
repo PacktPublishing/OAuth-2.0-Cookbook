@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<h2>Use multiple identity providers</h2>
+<p sec:authorize="isAuthenticated()">
+<div>You are logged in</div>
+</p>
+<a th:href="@{/dashboard}">Go to dashboard</a>
+</body>
+</html>

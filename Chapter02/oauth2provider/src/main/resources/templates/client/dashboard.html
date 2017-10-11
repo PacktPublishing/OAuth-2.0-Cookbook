@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>oauth2server</title>
+    <link href="../webjars/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+    <link href="/bootstrap-select.min.css" rel="stylesheet"></link>
+</head>
+
+<body>
+
+<br/>
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>OAuth2 Provider</h1>
+    </div>
+
+    <h2>Registered applications</h2>
+
+    <div th:if="${applications != null}">
+        <table class="table">
+            <tr>
+                <td>Application name</td>
+                <td>client type</td>
+                <td>client ID</td>
+                <td>client secret</td>
+                <td>Delete app</td>
+            </tr>
+            <tr th:each="app : ${applications}">
+                <td th:text="${app.additionalInformation['name']}"></td>
+                <td th:text="${app.additionalInformation['client_type']}"></td>
+                <td th:text="${app.clientId}">client_id</td>
+                <td th:text="${app.clientSecret}">client_secret</td>
+                <td><a class="btn btn-danger" href="#" th:href="@{/client/remove(client_id=${app.clientId})}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <a class="btn btn-default" href="/client/register">Create a new app</a>
+</div>
+</body>
+
+<script src="/jquery.min.js"></script>
+<script src="/bootstrap-select.min.js"></script>
+<script src="../webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</html>

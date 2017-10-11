@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Facebook - client side integration</title>
+</head>
+<body>
+	<div>Press the following button to start the implicit flow.</div>
+	<button id="authorize" type="button">Authorize</button>
+	<div id="box"></div>
+</body>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready(function() {
+	$("#authorize").click(makeRequest);
+});
+
+function makeRequest() {
+
+	var auth_endpoint = "https://www.facebook.com/v2.9/dialog/oauth",
+		response_type = "token",
+		client_id = "1948923582021549",
+		redirect_uri = "http://localhost:8080/callback",
+		scope = "public_profile user_friends";
+
+	var request_endpoint = auth_endpoint + "?" +
+		"response_type=" + response_type + "&" +
+		"client_id=" + client_id + "&" +
+		"redirect_uri=" + encodeURI(redirect_uri) + "&" +
+		"scope=" + encodeURI(scope);
+
+	window.location.href = request_endpoint;
+}
+/*]]>*/
+</script>
+
+</html>
