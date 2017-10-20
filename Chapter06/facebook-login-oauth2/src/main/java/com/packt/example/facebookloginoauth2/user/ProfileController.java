@@ -27,7 +27,7 @@ public class ProfileController {
         if (profile.isPresent()) {
             ModelAndView mv = new ModelAndView("profile");
             mv.addObject("profile", profile.get());
-            mv.addObject("openID", user.getFacebookLoginData());
+            mv.addObject("openID", user.getOpenIDAuthentication());
             return mv;
         }
 

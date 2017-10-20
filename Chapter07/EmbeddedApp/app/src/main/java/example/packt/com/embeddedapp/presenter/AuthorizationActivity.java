@@ -13,7 +13,6 @@ import java.util.UUID;
 import example.packt.com.embeddedapp.client.oauth2.AuthorizationRequest;
 import example.packt.com.embeddedapp.client.oauth2.OAuth2StateManager;
 import example.packt.com.embeddedapp.R;
-import example.packt.com.embeddedapp.client.ClientAPI;
 
 public class AuthorizationActivity extends AppCompatActivity {
 
@@ -35,18 +34,20 @@ public class AuthorizationActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return urlLoading(view, url);
+            }
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                String url = request.getUrl().toString();
+                return urlLoading(view, url);
+            }
+            private boolean urlLoading(WebView view, String url) {
                 if (url.contains("oauth2://profile/callback")) {
                     Intent intent = new Intent(
-                        AuthorizationActivity.this, RedirectUriActivity.class);
+                            AuthorizationActivity.this, RedirectUriActivity.class);
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
                     finish();
                 }
-                return false;
-            }
-            @Override
-            public boolean shouldOverrideUrlLoading(
-                WebView view, WebResourceRequest request) {
                 return false;
             }
         });

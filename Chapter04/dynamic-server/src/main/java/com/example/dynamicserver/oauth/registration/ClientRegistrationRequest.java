@@ -1,27 +1,28 @@
 package com.example.dynamicserver.oauth.registration;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 public class ClientRegistrationRequest {
 
+    @JsonProperty("redirect_uris")
+    private Set<String> redirectUris = new HashSet<>();
+    @JsonProperty("grant_types")
+    private Set<String> grantTypes = new HashSet<>();
     @NotBlank
+    @JsonProperty("client_name")
     private String clientName;
-
     @NotBlank
+    @JsonProperty("client_uri")
     private String clientUri;
-
     @NotBlank
     private String scope;
-
     @NotBlank
+    @JsonProperty("software_id")
     private String softwareId;
-
-    private Set<String> redirectUris = new HashSet<>();
-
-    private Set<String> grantTypes = new HashSet<>();
 
     public Set<String> getRedirectUris() {
         return redirectUris;

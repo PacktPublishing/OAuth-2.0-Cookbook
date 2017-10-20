@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tokenStore = new TokenStore(this);
         authenticationManager = new AuthenticationManager(this);
 
-        Button loginButton = findViewById(R.id.main_login_button);
+        Button loginButton = (Button) findViewById(R.id.main_login_button);
         loginButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        usernameText = findViewById(R.id.main_username);
-        passwordText = findViewById(R.id.main_password);
+        usernameText = (TextView) findViewById(R.id.main_username);
+        passwordText = (TextView) findViewById(R.id.main_password);
 
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 AccessToken accessToken = tokenStore.getToken();
 
                 Intent intent;
-                if (accessToken != null && !accessToken.hasExpired()) {
+                if (accessToken != null && !accessToken.isExpired()) {
                     intent = new Intent(MainActivity.this, DashboardActivity.class);
                 } else {
                     intent = new Intent(MainActivity.this, AuthorizationActivity.class);

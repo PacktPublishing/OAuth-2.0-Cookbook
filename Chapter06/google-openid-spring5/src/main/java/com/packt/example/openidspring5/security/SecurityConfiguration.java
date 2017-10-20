@@ -25,25 +25,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .oauth2Login().and();
     }
 
-@Autowired
-private GoogleRegistrationProperties properties;
+    @Autowired
+    private GoogleRegistrationProperties properties;
 
-@Bean
-public ClientRegistrationRepository clientRegistrationRepository() {
-    ClientRegistration registration = new ClientRegistration.Builder(properties.getClientId())
-        .authorizationUri(properties.getAuthorizationUri())
-        .clientSecret(properties.getClientSecret())
-        .tokenUri(properties.getTokenUri())
-        .redirectUri(properties.getRedirectUri())
-        .scope(properties.getScopes().split(","))
-        .clientName(properties.getClientName())
-        .clientAlias(properties.getClientAlias())
-        .jwkSetUri(properties.getJwkSetUri())
-        .authorizationGrantType(properties.getAuthorizedGrantType())
-        .userInfoUri(properties.getUserInfoUri())
-        .build();
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        ClientRegistration registration = new ClientRegistration.Builder(properties.getClientId())
+            .authorizationUri(properties.getAuthorizationUri())
+            .clientSecret(properties.getClientSecret())
+            .tokenUri(properties.getTokenUri())
+            .redirectUri(properties.getRedirectUri())
+            .scope(properties.getScopes().split(","))
+            .clientName(properties.getClientName())
+            .clientAlias(properties.getClientAlias())
+            .jwkSetUri(properties.getJwkSetUri())
+            .authorizationGrantType(properties.getAuthorizedGrantType())
+            .userInfoUri(properties.getUserInfoUri())
+            .build();
 
-    return new InMemoryClientRegistrationRepository(Arrays.asList(registration));
-}
+        return new InMemoryClientRegistrationRepository(Arrays.asList(registration));
+    }
 
 }

@@ -1,30 +1,31 @@
 package com.example.dynamicserver.oauth.registration;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ClientRegistrationResponse {
 
+    @JsonProperty("redirect_uris")
     private Set<String> redirectUris = new HashSet<>();
-
+    @JsonProperty("token_endpoint_auth_method")
     private String tokenEndpointAuthMethod;
-
+    @JsonProperty("grant_types")
     private Set<String> grantTypes = new HashSet<>();
-
+    @JsonProperty("response_types")
     private Set<String> responseTypes = new HashSet<>();
-
+    @JsonProperty("client_name")
     private String clientName;
-
+    @JsonProperty("client_uri")
     private String clientUri;
-
     private String scope;
-
+    @JsonProperty("software_id")
     private String softwareId;
-
+    @JsonProperty("client_id")
     private String clientId;
-
+    @JsonProperty("client_secret")
     private String clientSecret;
-
+    @JsonProperty("client_secret_expires_at")
     private long clientSecretExpiresAt;
 
     public Set<String> getRedirectUris() {
@@ -114,7 +115,5 @@ public class ClientRegistrationResponse {
     public void setClientSecretExpiresAt(long clientSecretExpiresAt) {
         this.clientSecretExpiresAt = clientSecretExpiresAt;
     }
-
-
 }
 

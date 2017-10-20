@@ -21,7 +21,7 @@ public class AccessToken {
 
     private String scope;
 
-    public boolean hasExpired() {
+    public boolean isExpired() {
         Long expirationTimeInSeconds = (issuedAt / 1000) + expiresIn;
         Long nowInSeconds = (new Date().getTime()) / 1000;
 

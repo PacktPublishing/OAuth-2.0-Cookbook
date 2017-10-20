@@ -1,6 +1,7 @@
 package com.packt.example.facebookloginoauth2.openid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -22,14 +23,16 @@ public class UserInfoService {
     public Map<String, String> getUserInfoFor(OAuth2AccessToken accessToken) {
         RestTemplate restTemplate = new RestTemplate();
 
-        RequestEntity<MultiValueMap<String, String>> requestEntity = new RequestEntity<>(
+        RequestEntity<Void> requestEntity = new RequestEntity<>(
                 getHeader(accessToken.getValue()),
                 HttpMethod.GET,
                 URI.create(properties.getUserInfoUri())
         );
 
-        ResponseEntity<Map> result = restTemplate.exchange(
-                requestEntity, Map.class);
+        ParameterizedTypeReference<Map<String, String>> typeRef =
+                new ParameterizedTypeReference<Map<String, String>>() {};
+        ResponseEntity<Map<String, String>> result = restTemplate.exchange(
+                requestEntity, typeRef);
 
         if (result.getStatusCode().is2xxSuccessful()) {
             return result.getBody();
@@ -38,8 +41,8 @@ public class UserInfoService {
         throw new RuntimeException("It wasn't possible to retrieve userInfo");
     }
 
-    private MultiValueMap getHeader(String accessToken) {
-        MultiValueMap httpHeaders = new HttpHeaders();
+    private MultiValueMap<String, String> getHeader(String accessToken) {
+        MultiValueMap<String, String> httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + accessToken);
         return httpHeaders;
     }

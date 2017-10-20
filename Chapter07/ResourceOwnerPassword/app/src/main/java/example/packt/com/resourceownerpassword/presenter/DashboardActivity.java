@@ -30,20 +30,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        usernameText = findViewById(R.id.profile_username);
-        emailText = findViewById(R.id.profile_email);
+        usernameText = (TextView) findViewById(R.id.profile_username);
+        emailText = (TextView) findViewById(R.id.profile_email);
 
         tokenStore = new TokenStore(this);
 
         if (new AuthenticationManager(this).isAuthenticated()) {
             // add some fake user entries
-            ListView listView = findViewById(R.id.dashboard_entries);
+            ListView listView = (ListView) findViewById(R.id.dashboard_entries);
             listView.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1,
                 new String[] {"Entry 1"}));
 
             // button to retrieve user profile
-            Button profileButton = findViewById(R.id.profile_button);
+            Button profileButton = (Button) findViewById(R.id.profile_button);
             profileButton.setOnClickListener(this);
         } else {
             Intent loginIntent = new Intent(this, MainActivity.class);
@@ -58,7 +58,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
 AccessToken accessToken = tokenStore.getToken();
 
-if (accessToken != null && !accessToken.hasExpired()) {
+if (accessToken != null && !accessToken.isExpired()) {
     Call<UserProfile> call = ClientAPI.userProfile()
         .token(accessToken.getValue());
 

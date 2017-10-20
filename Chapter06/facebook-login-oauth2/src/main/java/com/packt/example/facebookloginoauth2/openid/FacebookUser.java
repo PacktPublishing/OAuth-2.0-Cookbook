@@ -19,13 +19,13 @@ public class FacebookUser implements UserDetails {
     private Long id;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private FacebookLoginData facebookLoginData;
+    private FacebookLoginData openIDAuthentication;
 
     @Deprecated
     FacebookUser() {}
 
-    public FacebookUser(FacebookLoginData facebookLoginData) {
-        this.facebookLoginData = facebookLoginData;
+    public FacebookUser(FacebookLoginData openIDAuthentication) {
+        this.openIDAuthentication = openIDAuthentication;
     }
 
     @Override
@@ -33,13 +33,13 @@ public class FacebookUser implements UserDetails {
         return new ArrayList<>();
     }
 
-    public FacebookLoginData getFacebookLoginData() {
-        return facebookLoginData;
+    public FacebookLoginData getOpenIDAuthentication() {
+        return openIDAuthentication;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !facebookLoginData.hasExpired();
+        return !openIDAuthentication.hasExpired();
     }
 
     public Long getId() {
@@ -54,7 +54,7 @@ public class FacebookUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return facebookLoginData.getName();
+        return openIDAuthentication.getName();
     }
 
     @Override
