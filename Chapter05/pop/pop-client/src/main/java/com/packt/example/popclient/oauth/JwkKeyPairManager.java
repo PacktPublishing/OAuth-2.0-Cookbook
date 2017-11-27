@@ -7,6 +7,7 @@ import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
+import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyPair;
@@ -14,7 +15,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.UUID;
 
 @Component
 public class JwkKeyPairManager {
@@ -23,10 +23,13 @@ public class JwkKeyPairManager {
 
     public JwkKeyPairManager() {
         KeyPair keyPair = createRSA256KeyPair();
-        this.clientJwk = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
-                .privateKey((RSAPrivateKey) keyPair.getPrivate())
-                .keyID(UUID.randomUUID().toString()).build();
-
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        RandomValueStringGenerator random = new RandomValueStringGenerator();
+        RSAKey.Builder builder = new RSAKey.Builder(publicKey);
+        builder.keyID(random.generate());
+        builder.privateKey(privateKey);
+        this.clientJwk = builder.build();
     }
 
     public JWK createJWK() {
@@ -34,14 +37,17 @@ public class JwkKeyPairManager {
     }
 
     public String getSignedContent(String content) {
+        Payload contentPayload = new Payload(content);
+
         try {
-            RSASSASigner signer = new RSASSASigner((RSAKey) clientJwk);
-            JWSObject jwsObject = new JWSObject(
-                    new JWSHeader.Builder(JWSAlgorithm.RS256)
-                        .keyID(clientJwk.getKeyID()).build(),
-                    new Payload(content));
-            jwsObject.sign(signer);
-            return jwsObject.serialize();
+            RSASSASigner rsa = new RSASSASigner((RSAPrivateKey) clientJwk);
+            JWSAlgorithm alg = JWSAlgorithm.RS256;
+            JWSHeader header = new JWSHeader.Builder(alg)
+                .keyID(clientJwk.getKeyID())
+                .build();
+            JWSObject jws = new JWSObject(header, contentPayload);
+            jws.sign(rsa);
+            return jws.serialize();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

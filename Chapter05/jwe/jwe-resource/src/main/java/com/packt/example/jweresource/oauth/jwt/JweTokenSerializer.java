@@ -8,8 +8,8 @@ import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWEHeader;
 import com.nimbusds.jose.JWEObject;
 import com.nimbusds.jose.Payload;
-import com.nimbusds.jose.crypto.DirectDecrypter;
-import com.nimbusds.jose.crypto.DirectEncrypter;
+import com.nimbusds.jose.crypto.AESDecrypter;
+import com.nimbusds.jose.crypto.AESEncrypter;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -25,38 +25,34 @@ public class JweTokenSerializer {
     }
 
     public String encode(String payload) {
+        JWEAlgorithm alg = JWEAlgorithm.A128KW;
+        EncryptionMethod encryptionMethod = EncryptionMethod.A128GCM;
+
         try {
             byte[] decodedKey = Base64.getDecoder().decode(encodedKeypair);
             SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            JWEObject jwe = new JWEObject(
+                    new JWEHeader(alg, encryptionMethod),
+                    new Payload(payload));
+            jwe.encrypt(new AESEncrypter(key));
+            return jwe.serialize();
 
-            JWEHeader header = new JWEHeader(JWEAlgorithm.DIR, EncryptionMethod.A128GCM);
-            Payload payloadObject = new Payload(payload);
-
-            JWEObject jweObject = new JWEObject(header, payloadObject);
-            jweObject.encrypt(new DirectEncrypter(key));
-
-            return jweObject.serialize();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public Map<String, Object> decode(String base64EncodedKey, String content) {
-
-        byte[] decodedKey = Base64.getDecoder().decode(base64EncodedKey);
-        SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-
         try {
-            JWEObject  jweObject = JWEObject.parse(content);
+            byte[] decodedKey = Base64.getDecoder().decode(base64EncodedKey);
+            SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+            JWEObject jwe = JWEObject.parse(content);
+            jwe.decrypt(new AESDecrypter(key));
 
-            jweObject.decrypt(new DirectDecrypter(key));
-
-            Payload payload = jweObject.getPayload();
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectReader reader = objectMapper.readerFor(Map.class);
             return reader.with(DeserializationFeature.USE_LONG_FOR_INTS)
-                    .readValue(payload.toString());
-
+                    .readValue(jwe.getPayload().toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
